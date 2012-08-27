@@ -1,5 +1,5 @@
-reduceblanks<-function(x){
-        return(gsub("[[:blank:]]+", "\t", x))
+reduceblanks<-function(x, reductor="\t"){
+        return(gsub("[[:blank:]]+", reductor, x))
 }
 
 
