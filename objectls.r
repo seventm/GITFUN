@@ -3,13 +3,18 @@
 	{
 		objects<-ls(pos=which)
 		isfun<-vector("logical", length(objects))
+		isnum<-vector("logical", length(objects))
 		isclass<-vector("logical", length(objects))
 		
 		if(length(objects)==0){
 			cat("No objects\n")
 		} else {
 			isfun<-unlist(lapply(1:length(objects), function(i){isfun[i]<-is.function(get(objects[i]))}))
-			isclass[!isfun]<-unlist(lapply(c(1:length(objects))[!isfun], function(i){isclass[i]<-isClass(get(objects[i]), where=which)}))
+			isnum<-unlist(lapply(1:length(objects), function(i){isnum[i]<-is.numeric(get(objects[i]))}))
+			tmp<-c(1:length(objects))[!isfun&!isnum]
+			isclass[tmp]<-unlist(lapply(tmp, function(i){
+					isclass[i]<-isClass(get(objects[i]), where=which)
+				}))
 	
 			if(what=="fun")
 				print(objects[isfun])
